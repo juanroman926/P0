@@ -188,5 +188,23 @@ public class UserService {
             throw new UserSQLException(exception.getMessage());
         }
     }
+    public boolean accountAccessCheck(int userId, int accountId){
+        String sql = "SELECT COUNT(*) FROM checkingAccount WHERE userId = ? AND accountId = ?";
 
+        try (Connection connection = DatabaseConnector.createConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setInt(2, accountId);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
 }

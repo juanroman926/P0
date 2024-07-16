@@ -139,8 +139,14 @@ public class UserController {
         System.out.print("Amount: ");
         amount = scanner.nextDouble();
         scanner.nextLine();
-        userService.addToBalance(userId, amount, accountId);
-        System.out.println("New balance: " + userService.getBalance(userId, accountId));
+        boolean access = userService.accountAccessCheck(userId, accountId);
+        if(access){
+            userService.addToBalance(userId, amount, accountId);
+            System.out.println("New balance: " + userService.getBalance(userId, accountId));
+        }
+        else{
+            System.out.println("User does not have access to this account");
+        }
     }
     public void withdraw(int userId){
         int accountId = 0;
@@ -150,8 +156,14 @@ public class UserController {
         System.out.print("Amount: ");
         amount = scanner.nextDouble();
         scanner.nextLine();
-        userService.withdrawBalance(userId, amount, accountId);
-        System.out.println("New balance: " + userService.getBalance(userId, accountId));
+        boolean access = userService.accountAccessCheck(userId, accountId);
+        if(access){
+            userService.withdrawBalance(userId, amount, accountId);
+            System.out.println("New balance: " + userService.getBalance(userId, accountId));
+        }
+        else{
+            System.out.println("User does not have access to this account");
+        }
     }
     public void closeAccount(){
         System.out.print("Account ID: ");
