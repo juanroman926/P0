@@ -25,6 +25,7 @@ public class UserController {
             String userInput = scanner.nextLine();
             switch (userInput) {
                 case "1":
+                    System.out.println("Username must be unique and < 30 characters \nPassword must be < 30 characters");
                     registerNewUser();
                     break;
                 case "2":
@@ -102,7 +103,7 @@ public class UserController {
             amount = scanner.nextDouble();
             scanner.nextLine();
             double newBalance = userService.addToBalance(userId, amount,accountId);
-            System.out.println("New Balance: " + userService.getBalance(userId, accountId));
+            System.out.printf("New Balance:  $%.2f%n", userService.getBalance(userId, accountId));
         }catch (LoginFail exception){
             System.out.println(exception.getMessage());
         }
@@ -142,7 +143,7 @@ public class UserController {
         boolean access = userService.accountAccessCheck(userId, accountId);
         if(access){
             userService.addToBalance(userId, amount, accountId);
-            System.out.println("New balance: " + userService.getBalance(userId, accountId));
+            System.out.printf("New Balance:  $%.2f%n", userService.getBalance(userId, accountId));
         }
         else{
             System.out.println("User does not have access to this account");
@@ -159,7 +160,7 @@ public class UserController {
         boolean access = userService.accountAccessCheck(userId, accountId);
         if(access){
             userService.withdrawBalance(userId, amount, accountId);
-            System.out.println("New balance: " + userService.getBalance(userId, accountId));
+            System.out.printf("New Balance:  $%.2f%n", userService.getBalance(userId, accountId));
         }
         else{
             System.out.println("User does not have access to this account");

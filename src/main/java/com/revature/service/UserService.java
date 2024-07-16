@@ -6,6 +6,7 @@ import com.revature.exception.UserSQLException;
 import com.revature.repository.UserDao;
 import com.revature.utility.DatabaseConnector;
 
+import javax.security.auth.login.LoginException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,8 +24,9 @@ public class UserService {
             if (checkUsernameIsUnique(newUserCredentials)){
                 return userDao.createUser(newUserCredentials);
             }
+            throw new LoginFail("Username is already taken");
         }
-        throw new RuntimeException("Credentials are invalid");
+        throw new LoginFail("Invalid username or password");
     }
 
     private boolean checkUsernamePasswordLength(User newUserCredentials)

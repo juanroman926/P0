@@ -11,7 +11,7 @@ create table "user"(
 );
 
 insert into "user" (username, password) values ('admin', '1234');
-
+00
 create table "checkingAccount"(
     accountId integer primary key autoincrement,
     balance double default 0.0,
