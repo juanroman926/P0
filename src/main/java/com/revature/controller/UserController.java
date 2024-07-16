@@ -126,7 +126,7 @@ public class UserController {
                 withdraw(userId);
                 break;
             case 3:
-              closeAccount();
+              closeAccount(userId);
             case 4:
                 break;
         }
@@ -165,17 +165,23 @@ public class UserController {
             System.out.println("User does not have access to this account");
         }
     }
-    public void closeAccount(){
+    public void closeAccount(int userId){
         System.out.print("Account ID: ");
         int accountId= scanner.nextInt();
         scanner.nextLine();
-        int accountClosed = userService.deleteAccount(accountId);
-        if(accountClosed != -1) {
-            System.out.println("Checking account " + accountClosed + " closed successfully");
+        boolean access = userService.accountAccessCheck(userId, accountId);
+        if(access){
+            int accountClosed = userService.deleteAccount(accountId);
+            if(accountClosed != -1) {
+                System.out.println("Checking account " + accountClosed + " closed successfully");
+            }
+            else{
+                System.out.println("Checking account" + accountId+ "not found");
+            }
+        }else{
+            System.out.println("User does not have access to this account");
         }
-        else{
-            System.out.println("Checking account" + accountId+ "not found");
-        }
+
     }
 
 }
